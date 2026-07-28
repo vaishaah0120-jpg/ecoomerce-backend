@@ -15,7 +15,6 @@ export const SceneFeatures: React.FC = () => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
 
-  const blueColor = "#0071e3";
 
   // Easing zoom (camera push: 0.98 -> 1.03)
   const scale = interpolate(frame, [0, durationInFrames], [0.98, 1.03], {

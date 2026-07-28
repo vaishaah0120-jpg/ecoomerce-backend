@@ -20,7 +20,6 @@ export const SceneDashboard: React.FC = () => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
 
-  const accentColor = "#387ED1"; // Zerodha-inspired blue
 
   // ==========================================
   // CAMERA ANIMATION & PARALLAX
@@ -60,16 +59,7 @@ export const SceneDashboard: React.FC = () => {
   // OPENING TRANSITIONS (Frames 0 - 60)
   // ==========================================
 
-  // Thin blue growing line (0-1 sec)
-  const blueLineWidth = interpolate(frame, [5, 35], [0, 100], {
-    easing: Easing.bezier(0.25, 1, 0.5, 1),
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const blueLineOpacity = interpolate(frame, [30, 45], [1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+
 
   // Browser window scale & opacity entrance
   const browserScale = interpolate(frame, [20, 50], [0.95, 1.0], {
@@ -235,16 +225,7 @@ export const SceneDashboard: React.FC = () => {
         opacity: finalOpacity,
       }}
     >
-      {/* 1. Growing Blue Accent Line */}
-      {frame < 45 && (
-        <div
-          className="absolute top-1/2 left-1/2 h-[2px] bg-[#387ED1] -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none"
-          style={{
-            width: `${blueLineWidth}%`,
-            opacity: blueLineOpacity,
-          }}
-        />
-      )}
+
 
       {/* 2. Parallax background grid */}
       <div 
@@ -320,15 +301,6 @@ export const SceneDashboard: React.FC = () => {
                 }}
               >
                 <div className="text-center space-y-5">
-                  <SlideTextReveal
-                    text="Track • Analyse • Invest"
-                    startFrame={15}
-                    duration={20}
-                    color={accentColor}
-                    fontFamily={interFamily}
-                    className="text-sm font-bold tracking-[8px] uppercase pl-[8px]"
-                  />
-                  
                   <h1
                     style={{
                       fontFamily: poppinsFamily,
@@ -339,25 +311,10 @@ export const SceneDashboard: React.FC = () => {
                     <SlideTextReveal
                       text="Start Investing with Confidence"
                       startFrame={25}
-                      duration={20}
+                      duration={45}
                       color="#0f172a"
                     />
                   </h1>
-
-                  <p
-                    style={{
-                      fontFamily: interFamily,
-                    }}
-                    className="text-slate-500 text-xl font-light max-w-2xl mx-auto"
-                  >
-                    <SlideTextReveal
-                      text="Manage your portfolio with a simple and powerful dashboard."
-                      startFrame={35}
-                      duration={20}
-                      color="#64748b"
-                      stagger={1.5}
-                    />
-                  </p>
                 </div>
               </div>
             )}

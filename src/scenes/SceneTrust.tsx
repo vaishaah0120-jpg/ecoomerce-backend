@@ -10,6 +10,48 @@ const { fontFamily: interFamily } = loadInter("normal", {
   weights: ["400", "500", "600", "700"],
 });
 
+// Reusable Web Screen Mockup (Browser Window) Component
+const BrowserWindow: React.FC<{
+  url: string;
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+  className?: string;
+  contentClassName?: string;
+}> = ({ url, children, style = {}, className = "", contentClassName = "" }) => {
+  return (
+    <div 
+      className={`bg-white rounded-2xl border border-black/[0.04] overflow-hidden flex flex-col ${className}`}
+      style={{
+        boxShadow: "0 20px 45px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.01)",
+        ...style
+      }}
+    >
+      {/* Browser Window Header */}
+      <div className="flex items-center justify-between px-5 py-3 bg-slate-50 border-b border-black/[0.04] select-none">
+        {/* Left: Window Control dots */}
+        <div className="flex gap-1.5 flex-shrink-0 w-16">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
+        </div>
+        {/* Center: Address Bar */}
+        <div className="bg-slate-100/80 text-[10px] text-slate-400 font-mono px-5 py-0.5 rounded-md border border-black/[0.02] flex items-center gap-1.5 max-w-[260px] truncate text-center mx-auto">
+          <svg className="w-2.5 h-2.5 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          {url}
+        </div>
+        {/* Right: Spacer to center address */}
+        <div className="w-16 flex-shrink-0" />
+      </div>
+      {/* Browser Window Viewport Content */}
+      <div className={`flex-1 p-5 flex flex-col justify-between ${contentClassName}`}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
 export const SceneTrust: React.FC = () => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
@@ -86,75 +128,75 @@ export const SceneTrust: React.FC = () => {
   });
 
   // ----------------------------------------------------
-  // RIGHT COLUMN CARD ANIMATIONS
+  // RIGHT COLUMN CARD ANIMATIONS (SLIDING WEB SCREENS)
   // ----------------------------------------------------
 
-  // Card 1: Verified Account Status (Entrance)
-  const card1Opacity = interpolate(frame, [10, 35], [0, 1], {
+  // Card 1: Verified Account Status (Entrance horizontal slide)
+  const card1Opacity = interpolate(frame, [15, 40], [0, 1], {
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
-  const card1TranslateY = interpolate(frame, [10, 35], [40, 0], {
+  const card1TranslateX = interpolate(frame, [15, 45], [700, 0], {
     easing: Easing.bezier(0.16, 1, 0.3, 1),
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
 
   // Security Shield Outer border drawing
-  const shieldDrawProgress = interpolate(frame, [25, 55], [300, 0], {
+  const shieldDrawProgress = interpolate(frame, [35, 60], [300, 0], {
     easing: Easing.bezier(0.25, 1, 0.5, 1),
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
 
   // Inner Checkmark path drawing
-  const checkmarkDrawProgress = interpolate(frame, [50, 75], [50, 0], {
+  const checkmarkDrawProgress = interpolate(frame, [55, 75], [50, 0], {
     easing: Easing.bezier(0.25, 1, 0.5, 1),
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
 
   // Glow Checkmark Completed Pulse
-  const pulseScale = interpolate(frame, [70, 95], [0.8, 2.0], {
+  const pulseScale = interpolate(frame, [75, 95], [0.8, 1.8], {
     easing: Easing.bezier(0.16, 1, 0.3, 1),
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
-  const pulseOpacity = interpolate(frame, [70, 95], [0.8, 0], {
+  const pulseOpacity = interpolate(frame, [75, 95], [0.8, 0], {
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
 
-  // Card 2: Portfolio Overview (Entrance)
-  const card2Opacity = interpolate(frame, [70, 95], [0, 1], {
+  // Card 2: Portfolio Overview (Entrance horizontal slide)
+  const card2Opacity = interpolate(frame, [55, 80], [0, 1], {
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
-  const card2TranslateY = interpolate(frame, [70, 95], [50, 0], {
+  const card2TranslateX = interpolate(frame, [55, 85], [700, 0], {
     easing: Easing.bezier(0.16, 1, 0.3, 1),
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
 
   // Portfolio Sparkline drawing progress
-  const sparklineDrawProgress = interpolate(frame, [90, 140], [500, 0], {
+  const sparklineDrawProgress = interpolate(frame, [85, 135], [500, 0], {
     easing: Easing.bezier(0.25, 1, 0.45, 1),
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
 
   // Portfolio allocation bars width expansion percentages
-  const bluechipWidth = interpolate(frame, [95, 125], [0, 60], {
+  const bluechipWidth = interpolate(frame, [90, 120], [0, 60], {
     easing: Easing.bezier(0.25, 1, 0.5, 1),
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
-  const goldWidth = interpolate(frame, [100, 130], [0, 30], {
+  const goldWidth = interpolate(frame, [95, 125], [0, 30], {
     easing: Easing.bezier(0.25, 1, 0.5, 1),
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
   });
-  const cashWidth = interpolate(frame, [105, 135], [0, 10], {
+  const cashWidth = interpolate(frame, [100, 130], [0, 10], {
     easing: Easing.bezier(0.25, 1, 0.5, 1),
     extrapolateRight: "clamp",
     extrapolateLeft: "clamp",
@@ -162,14 +204,14 @@ export const SceneTrust: React.FC = () => {
 
   // Sparkline SVG definition
   const chartPoints = [
-    { x: 10, y: 80 },
-    { x: 70, y: 70 },
-    { x: 130, y: 85 },
-    { x: 190, y: 50 },
-    { x: 250, y: 65 },
-    { x: 310, y: 30 },
-    { x: 370, y: 35 },
-    { x: 430, y: 15 },
+    { x: 15, y: 80 },
+    { x: 90, y: 70 },
+    { x: 165, y: 85 },
+    { x: 240, y: 50 },
+    { x: 315, y: 65 },
+    { x: 390, y: 30 },
+    { x: 465, y: 35 },
+    { x: 540, y: 15 },
   ];
 
   const sparklineD = useMemo(() => {
@@ -179,7 +221,7 @@ export const SceneTrust: React.FC = () => {
   }, []);
 
   const sparklineAreaD = useMemo(() => {
-    return `${sparklineD} L 430 100 L 10 100 Z`;
+    return `${sparklineD} L 540 100 L 15 100 Z`;
   }, [sparklineD]);
 
   return (
@@ -198,56 +240,56 @@ export const SceneTrust: React.FC = () => {
       </div>
 
       {/* Main split content layout */}
-      <div className="flex flex-1 justify-between items-center z-20 my-auto w-full max-w-7xl mx-auto gap-16">
+      <div className="flex flex-1 justify-between items-center z-20 my-auto w-full gap-16">
         
         {/* Left Column: Typography copy */}
-        <div className="flex flex-col space-y-6 max-w-xl text-left">
+        <div className="flex flex-col space-y-6 max-w-2xl text-left">
           <span
             style={{ fontFamily: interFamily, color: blueColor }}
-            className="text-xs font-semibold tracking-[8px] uppercase pl-[2px]"
+            className="text-base font-bold tracking-[8px] uppercase pl-[2px]"
           >
             Trust & Transparency
           </span>
 
           <div className="flex flex-col space-y-2 mt-2">
-            <h1
+            <h1 
               style={{
                 fontFamily: poppinsFamily,
                 color: "#111111",
-                letterSpacing: "-1.5px",
-                lineHeight: 1.1,
-                opacity: secureOpacity,
-                transform: `translateY(${secureTranslateY}px)`,
+                letterSpacing: "-2px",
+                lineHeight: 1.05,
               }}
-              className="text-5xl md:text-6xl font-extrabold"
+              className="text-6xl md:text-7xl font-extrabold flex flex-col gap-2"
             >
-              Secure.
-            </h1>
-            <h1
-              style={{
-                fontFamily: poppinsFamily,
-                color: "#111111",
-                letterSpacing: "-1.5px",
-                lineHeight: 1.1,
-                opacity: transparentOpacity,
-                transform: `translateY(${transparentTranslateY}px)`,
-              }}
-              className="text-5xl md:text-6xl font-extrabold"
-            >
-              Transparent.
-            </h1>
-            <h1
-              style={{
-                fontFamily: poppinsFamily,
-                color: "#111111",
-                letterSpacing: "-1.5px",
-                lineHeight: 1.1,
-                opacity: simpleOpacity,
-                transform: `translateY(${simpleTranslateY}px)`,
-              }}
-              className="text-5xl md:text-6xl font-extrabold"
-            >
-              Simple.
+              <div className="flex items-center gap-x-4 flex-nowrap whitespace-nowrap">
+                <span
+                  style={{
+                    opacity: secureOpacity,
+                    transform: `translateY(${secureTranslateY}px)`,
+                    display: "inline-block",
+                  }}
+                >
+                  Secure
+                </span>
+                <span
+                  style={{
+                    opacity: transparentOpacity,
+                    transform: `translateY(${transparentTranslateY}px)`,
+                    display: "inline-block",
+                  }}
+                >
+                  Transparent
+                </span>
+              </div>
+              <div
+                style={{
+                  opacity: simpleOpacity,
+                  transform: `translateY(${simpleTranslateY}px)`,
+                  display: "inline-block",
+                }}
+              >
+                Simple
+              </div>
             </h1>
           </div>
 
@@ -257,28 +299,28 @@ export const SceneTrust: React.FC = () => {
               opacity: descOpacity,
               transform: `translateY(${descTranslateY}px)`,
             }}
-            className="text-black/60 text-lg leading-relaxed font-light mt-4"
+            className="text-black/60 text-2xl leading-relaxed font-light mt-4"
           >
             A platform designed from the ground up to protect your assets and verify every transaction instantly.
           </p>
         </div>
 
         {/* Right Column: Cards container */}
-        <div className="relative w-[520px] h-[400px] flex-shrink-0 flex flex-col space-y-6">
+        <div className="relative w-[600px] h-[480px] flex-shrink-0 flex flex-col space-y-6">
           
           {/* Card 1: Verified Account */}
-          <div
-            className="bg-white rounded-2xl border border-black/[0.04] p-5 flex items-center gap-5 transition-all duration-300"
+          <BrowserWindow
+            url="security.vaishna.vi"
             style={{
               opacity: card1Opacity,
-              transform: `translateY(${card1TranslateY}px)`,
-              boxShadow: "0 20px 45px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.01)",
+              transform: `translateX(${card1TranslateX}px)`,
             }}
+            contentClassName="flex-row items-center gap-5"
           >
             {/* Animated Shield Area */}
             <div className="relative w-16 h-16 flex-shrink-0 flex items-center justify-center">
               {/* Outer Ripple Pulse Circle */}
-              {frame >= 70 && (
+              {frame >= 75 && (
                 <div
                   className="absolute rounded-full border pointer-events-none"
                   style={{
@@ -320,7 +362,7 @@ export const SceneTrust: React.FC = () => {
             </div>
 
             {/* Verification Copy */}
-            <div className="flex flex-col">
+            <div className="flex flex-col text-left">
               <div className="flex items-center space-x-2">
                 <span style={{ fontFamily: poppinsFamily }} className="text-sm font-bold text-slate-800">
                   Account Status
@@ -340,19 +382,20 @@ export const SceneTrust: React.FC = () => {
                 SECURE KEY: SHA-256 // ENG-APPROVED
               </span>
             </div>
-          </div>
+          </BrowserWindow>
 
           {/* Card 2: Portfolio Overview */}
-          <div
-            className="bg-white rounded-2xl border border-black/[0.04] p-6 flex flex-col justify-between flex-1 transition-all duration-300"
+          <BrowserWindow
+            url="portfolio.vaishna.vi"
             style={{
               opacity: card2Opacity,
-              transform: `translateY(${card2TranslateY}px)`,
-              boxShadow: "0 20px 45px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.01)",
+              transform: `translateX(${card2TranslateX}px)`,
             }}
+            className="flex-1"
+            contentClassName="justify-between"
           >
             {/* Header info */}
-            <div className="flex justify-between items-start">
+            <div className="flex justify-between items-start text-left">
               <div>
                 <span style={{ fontFamily: interFamily }} className="text-[10px] text-slate-400 uppercase tracking-wider block">
                   PORTFOLIO OVERVIEW
@@ -399,7 +442,7 @@ export const SceneTrust: React.FC = () => {
             </div>
 
             {/* Bottom part: Staggered bar charts */}
-            <div className="flex flex-col space-y-2 mt-4">
+            <div className="flex flex-col space-y-2 mt-4 text-left">
               {/* Asset 1: Stocks */}
               <div className="flex flex-col">
                 <div className="flex justify-between text-[10px] text-slate-400 font-medium">
@@ -449,8 +492,7 @@ export const SceneTrust: React.FC = () => {
                 </div>
               </div>
             </div>
-
-          </div>
+          </BrowserWindow>
 
         </div>
 

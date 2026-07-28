@@ -356,10 +356,10 @@ export const SceneEducation: React.FC = () => {
         ))}
       </div>
 
-      <div className="flex flex-1 justify-between items-center z-20 my-auto w-full max-w-7xl mx-auto gap-16">
+      <div className="flex flex-1 justify-between items-center z-20 my-auto w-full gap-16">
         
         {/* Left Side: Typography */}
-        <div className="flex flex-col space-y-6 max-w-xl text-left -ml-12">
+        <div className="flex flex-col space-y-6 max-w-xl text-left">
           <div
             style={{
               opacity: textOpacity,
@@ -403,7 +403,7 @@ export const SceneEducation: React.FC = () => {
         <div
           className="relative w-[500px] h-[360px] flex-shrink-0"
           style={{
-            transform: "scale(1.2)",
+            transform: "scale(1.4) translateX(-45px)",
             transformOrigin: "center",
           }}
         >

@@ -142,7 +142,7 @@ export const SceneJourney: React.FC = () => {
 
       {/* Split Layout: Copy left, Visual Timeline right */}
       <div className="flex flex-1 justify-between items-center z-20 my-auto w-full gap-12">
-        
+
         {/* Left Side Column: Copy & Title */}
         <div
           className="flex flex-col space-y-6 max-w-xl text-left"
@@ -172,7 +172,7 @@ export const SceneJourney: React.FC = () => {
           </h1>
           <p
             style={{ fontFamily: interFamily }}
-            className="text-black/60 text-lg leading-relaxed font-light"
+            className="text-black/60 text-2xl leading-relaxed font-light"
           >
             Follow a proven path to transition your active earnings into long-term financial freedom.
           </p>
@@ -180,7 +180,7 @@ export const SceneJourney: React.FC = () => {
 
         {/* Right Side Column: Visual Timeline Area */}
         <div className="relative w-[800px] h-[550px] flex-shrink-0">
-          
+
           {/* SVG Curve Path */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none z-10">
             {/* Shadow/Glow path */}
